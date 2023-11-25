@@ -30,9 +30,10 @@ async function run() {
     const userCollection = client.db("travelDB").collection("users");
     const packagesCollection = client.db("travelDB").collection("travelPackages");
     const storyCollection = client.db("travelDB").collection("stories");
+    const cartCollection = client.db("travelDB").collection("carts");
 
     // users related apis
-    app.get('/users', async(req, res) =>{
+    app.post('/users', async(req, res) =>{
       const user = req.body;
       const result = await userCollection.insertOne(user);
       res.send(result);
@@ -49,6 +50,14 @@ async function run() {
         const result = await storyCollection.find().toArray();
         res.send(result);
     })
+
+    
+// cart related apps
+    app.post('/carts', async(req, res) =>{
+      const cartItem = req.body;
+      const result = await cartCollection.insertOne(cartItem);
+      res.send(result);
+  })
 
 
 
