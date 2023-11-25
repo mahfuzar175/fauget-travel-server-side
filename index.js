@@ -27,8 +27,16 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
+    const userCollection = client.db("travelDB").collection("users");
     const packagesCollection = client.db("travelDB").collection("travelPackages");
     const storyCollection = client.db("travelDB").collection("stories");
+
+    // users related apis
+    app.get('/users', async(req, res) =>{
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+  })
 
     // packages apis
     app.get('/travelPackages', async(req, res) =>{
