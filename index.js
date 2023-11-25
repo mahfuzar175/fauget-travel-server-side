@@ -28,9 +28,17 @@ async function run() {
     // await client.connect();
 
     const packagesCollection = client.db("travelDB").collection("travelPackages");
+    const storyCollection = client.db("travelDB").collection("stories");
 
+    // packages apis
     app.get('/travelPackages', async(req, res) =>{
         const result = await packagesCollection.find().toArray();
+        res.send(result);
+    })
+
+    // stories apis
+    app.get('/stories', async(req, res) =>{
+        const result = await storyCollection.find().toArray();
         res.send(result);
     })
 
