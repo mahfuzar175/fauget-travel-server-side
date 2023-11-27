@@ -196,6 +196,12 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/stories", async (req, res) => {
+      const newStory = req.body;
+      const result = await storyCollection.insertOne(newStory);
+      res.send(result);
+      });
+
     // cart related apps
     app.get("/carts", async (req, res) => {
       const email = req.query.email;
