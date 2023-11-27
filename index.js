@@ -32,6 +32,7 @@ async function run() {
       .collection("travelPackages");
     const storyCollection = client.db("travelDB").collection("stories");
     const cartCollection = client.db("travelDB").collection("carts");
+    const bookingCollection = client.db("travelDB").collection("bookings");
 
     // jwt related api
     app.post("/jwt", async (req, res) => {
@@ -127,7 +128,7 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.get("/users", verifyToken, verifyAdmin, async (req, res) => {
+    app.get("/users", async (req, res) => {
       console.log(req.headers);
       const result = await userCollection.find().toArray();
       res.send(result);
@@ -220,6 +221,13 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await cartCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // booking
+    app.post("/bookings", async (req, res) => {
+      const bookingItem = req.body;
+      const result = await bookingCollection.insertOne(bookingItem);
       res.send(result);
     });
 
