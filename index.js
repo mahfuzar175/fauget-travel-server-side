@@ -101,6 +101,8 @@ async function run() {
       res.send({ admin });
     });
 
+
+
     // tour guide role
     app.get("/users/tourGuide/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
@@ -116,7 +118,6 @@ async function run() {
       }
       res.send({ tourGuide });
     });
-
 
     // users related apis
     // app.get("/users", async (req, res) => {
@@ -164,7 +165,7 @@ async function run() {
     });
 
     // make tourguide
-    app.patch("/users/tourGuide/:id", verifyAdmin, verifyToken, async (req, res) => {
+    app.patch("/users/tourGuide/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const updatedDoc = {
@@ -180,6 +181,13 @@ async function run() {
     app.get("/travelPackages", async (req, res) => {
       const result = await packagesCollection.find().toArray();
       res.send(result);
+    });
+
+
+   app.post("/travelPackages", async (req, res) => {
+    const newPackage = req.body;
+    const result = await packagesCollection.insertOne(newPackage);
+    res.send(result);
     });
 
     // stories apis
