@@ -231,13 +231,52 @@ async function run() {
       res.send(result);
     });
 
-
       app.get("/bookings", async (req, res) => {
       const email = req.query.email;
       const query = { email: email };
       const result = await bookingCollection.find(query).toArray();
       res.send(result);
     });
+
+    // forReview
+   app.patch("/bookings/inReview/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: "inReview",
+        },
+      };
+      const result = await bookingCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
+    // forRecjected
+   app.patch("/bookings/rejected/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: "rejected",
+        },
+      };
+      const result = await bookingCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
+
+    // forReview
+   app.patch("/bookings/accepted/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updatedDoc = {
+        $set: {
+          status: "accepted",
+        },
+      };
+      const result = await bookingCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    });
+
+
 
     // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 1 });
