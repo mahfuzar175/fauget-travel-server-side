@@ -231,12 +231,32 @@ async function run() {
       res.send(result);
     });
 
-      app.get("/bookings", async (req, res) => {
+
+    app.get("/bookings", async (req, res) => {
+      const tourGuide = req.query.tourGuide;
       const email = req.query.email;
-      const query = { email: email };
+      const query = {};
+      if(tourGuide){
+        query.tourGuide = tourGuide;
+      }
+      if(email){
+        query.email = email;
+      }
+      // const query = { email: email };
       const result = await bookingCollection.find(query).toArray();
       res.send(result);
     });
+
+
+  
+
+
+    // app.get("/bookings", async (req, res) => {
+    //   const result = await bookingCollection.find().toArray();
+    //   res.send(result);
+    // });
+
+
 
     // forReview
    app.patch("/bookings/inReview/:id", async (req, res) => {
